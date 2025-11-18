@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}My Flask App{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+
+    {% include 'partials/header.html' %}
+
+    {% block content %}{% endblock %}
+
+    {% include 'partials/footer.html' %}
+    
+    {% block scripts %}
+    <!-- Page-specific scripts go here -->
+    {% endblock %}
+  </body>
+</html>

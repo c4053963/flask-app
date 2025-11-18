@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Staff Filtered{% endblock %}
+
+{% block content %}
+<h1>Staff Members (Filtered)</h1>
+
+<form id="filter-form" method="get" action="{{ url_for('main.staff_data') }}">
+  <label for="department">Filter by Department:</label>
+  <select name="department" id="department">
+    <option value="">All Departments</option>
+    {% for dept in departments %}
+      <option value="{{ dept }}" {% if dept == selected %}selected{% endif %}>{{ dept }}</option>
+    {% endfor %}
+  </select>
+</form>
+
+{% if selected %}
+  <p>Showing results for: <strong>{{ selected }}</strong></p>
+{% endif %}
+
+<div class="staff-list">
+  {% for staff in staffData %}
+    <div class="card">
+      {% for key, value in staff.items() %}
+        <div><strong>{{ key | title }}:</strong> {{ value }}</div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p>No staff found for that department.</p>
+  {% endfor %}
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+  document.getElementById('department').addEventListener('change', function () {
+    document.getElementById('filter-form').submit();
+  });
+</script>
+{% endblock %}
