@@ -1,5 +1,7 @@
 <nav>
-    <a href="/">Home</a> |
-    <a href="/about">About</a>
+    <a href="{{ url_for('main.index') }}">Home</a> |
+    <a href="{{ url_for('main.about') }}">About</a> |
+    <a href="{{ url_for('main.staff_data') }}">Staff Data</a> |
+    <a href="{{ url_for('main.db_data') }}">DB Data</a>
 </nav>
 <hr>
