@@ -1,7 +1,12 @@
 import os
 import json
-from flask import request, render_template, current_app
+from flask import request, render_template, current_app, jsonify 
 from . import main  # This assumes you're using a blueprint called 'main'
+from config import db_config
+import mysql.connector
+from flask import render_template
+from . import main
+from db import query, execute
 
 @main.route('/')
 def index():
@@ -37,3 +42,31 @@ def staff_data():
         departments=departments,
         selected=selected_department
     )
+
+
+
+@main.route('/db_data')
+def db_data():
+    data = query("SELECT * FROM staff")
+    return render_template('db_data.html', data=data)
+
+@main.route('/staff/<int:staff_id>')
+def staff_details(staff_id):
+    staff = query("SELECT * FROM staff WHERE id = %s", (staff_id,), True)
+    
+    # If the staff member exists, render the details page template
+    if staff:
+        return render_template('staff_details.html', staff=staff)
+    else:
+        # If no matching staff member, return 404 error page
+        return "Staff member not found", 404
+    
+@main.route('/api/staff')
+def get_staff_json():
+    rows = query("SELECT * FROM staff")
+    return jsonify(rows)
+
+@main.route('/api/staff/<int:staff_id>')
+def get_staff_by_id_json(staff_id):
+    row = query("SELECT * FROM staff WHERE id = %s", (staff_id,), True)
+    return jsonify(row)

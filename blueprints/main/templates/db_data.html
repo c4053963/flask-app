@@ -1,0 +1,16 @@
+{% extends 'base.html' %} {% block title %}Welcome{% endblock %} {% block
+content %}
+<h2>Staff</h2>
+<h1>All Staff</h1>
+{% if data %}
+<ul>
+  {% for member in data %}
+  <li>
+    {{ member.first_name }} {{ member.last_name }} —
+    <a href="{{ url_for('main.staff_details', staff_id=member.id) }}">View Details</a>
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p>No staff members found.</p>
+{% endif %} {% endblock %}

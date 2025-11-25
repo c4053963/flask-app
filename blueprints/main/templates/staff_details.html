@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Staff Details{% endblock %}
+
+{% block content %}
+    <h1>Details for {{ staff.first_name }} {{ staff.last_name }}</h1>
+    <ul>
+        <li><strong>ID:</strong> {{ staff.id }}</li>
+        <li><strong>Department:</strong> {{ staff.department }}</li>
+        <li><strong>Email:</strong> {{ staff.email }}</li>
+        <!-- Add more fields as needed -->
+    </ul>
+    <a href="{{ url_for('main.db_data') }}">Back to staff list</a>
+{% endblock %}
